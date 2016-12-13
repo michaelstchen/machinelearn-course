@@ -1,0 +1,20 @@
+Name: Michael Stephen Chen
+SID: 23567341
+
+Platform: Ubuntu
+Language: Python 2
+Libraries: numpy, scipy, sklearn, matplotlib, csv
+
+Instructions:
+	For each problem I have written a script (e.g. prob1.py). To reproduce my results run the following in the terminal with the according python file (e.g. switch 'prob1.py' with 'prob2.py' to run problem 2 stuff)
+
+	'python prob1.py'
+
+	Note that prob1.py, prob2.py, and prob3.py should be located in the 'digit-dataset' folder. prob4.py should be located in the 'spam-dataset' folder. Also note that all requred plots and figures, as well as the results of various benchmarks, are written to files during the running of the scripts with appropriately named filenames.
+
+Credits:
+	- I used the 'benchmark' function written by Kunal Marwaha
+	  and posted on Piazza
+	- The idea for using 'np.random.set_state(random_state)' to
+	  specify the random generator seed was taken from
+	  StackOverflow.

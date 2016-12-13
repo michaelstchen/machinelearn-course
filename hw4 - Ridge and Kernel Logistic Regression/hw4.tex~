@@ -1,0 +1,193 @@
+\documentclass{article}
+
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\graphicspath{ {Images/} }
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\title{CS 189: Homework 4}
+\author{Michael Stephen Chen\\ Kaggle Acct: michaelstchen \\SID: 23567341}
+
+\begin{document}
+\maketitle
+
+\pagebreak
+
+\section*{Problem 1}
+\begin{enumerate}[a)]
+  \item Below is my write up for this part\\
+    \begin{center}
+      \includegraphics[scale=0.8]{prob1a}
+    \end{center}
+  \item
+    \begin{enumerate}[i.]
+      \item See \textit{prob1.py} in the Appendix
+      \item After 10-fold cross-validation, I found the optimal $\lambda = 0$. The RSS for the validation set was \textbf{5782240895023.2158} (or 5.7822e12), which is on the same order of magnitude as the RSS for hw3 which was \textbf{5794953797667.3555}.
+
+        This is expected because when $\lambda=0$, the ridge regresssion essentially becomes a normal linear regression because there is no penalty against large weights. The slight discrepancy between the two RSS values comes from the fact that instead of appending a column of ones to the data and regressing over that, we just add an average to account for translation from the origin.
+        
+      \item Below is a plot of the regression coefficients for our ridge regression:
+        \begin{center}
+          \includegraphics[scale=0.5]{prob1b}
+        \end{center}
+
+        Again the regression coefficients are essentially the same as the ones from our linear regression in hw3. As aforementioned, this is because we found the optimal lambda to be $\lambda=0$, which essentially reduces our ridge regression into a regular linear regression.
+    \end{enumerate}
+\end{enumerate}
+
+\section*{Problem 2}
+  For the following problems, please see \textit{prob2.py} for the code I used to obtain my values
+
+\begin{enumerate}[a)]
+  \item $R(\boldsymbol{w}^{(0)}) = 1.9883724141284103$
+  \item $\boldsymbol{\mu}^{(0)} = \left[ 0.95257413,0.73105858,0.73105858,0.26894142 \right]^T$
+  \item $\boldsymbol{w}^{(1)} = \left[ -2, 0.94910188,-0.68363271 \right]^T$
+  \item $R(\boldsymbol{w}^{(1)}) = 1.7206170956213047$
+  \item $\boldsymbol{\mu}^{(1)} = \left[ 0.89693957,0.54082713,0.56598026,0.15000896 \right]^T$
+  \item $\boldsymbol{w}^{(2)} = \left[ -1.69083609, 1.91981257,-0.83738862 \right]^T$
+  \item $R(\boldsymbol{w}^{(2)}) = 1.8546997847922495$
+\end{enumerate}
+
+\section*{Problem 3}
+For the scripts, please check the Appendix. All scripts are named after the part they were used for.
+
+\begin{enumerate}[1.]
+  \item Batch gradient descent with a stopping criteria of 0.1 resulted in risks of 1743.60, 1954.24, and 1592.64 for methods (i), (ii), and (iii), respectively. The step sizes were 1e-3, 1e-6, and 1e-3 for methods (i), (ii), and (iii). The initial weights were all initialized at 0.01 for all three methods. Below are the plots depicting the risks as a function of update iterations:
+    \begin{center}
+      \includegraphics[scale=0.5]{prob3_1}
+    \end{center}
+
+    From the plots above, we see that both methods (i) and (iii) converge fairly quickly at around 2500 and 1200 iterations, respectively. (iii) converges slightly faster than (i), and at a slightly lower risk value as well. At first I found it odd that the binary preprocessing method gave a lower risk value than the scaling method. I would have thought that the binary method would underfit the data given that it clamps values, and would consequently result in a higher training risk. Then I came to the realization that although this might be true, the scaling method was probably ``underfitting'', maybe its more appropriate to use ``generalizing'', to a larger degree than the binary method.
+
+  \item Stochastic gradient descent results are presented below. Unlike the previous part, this time our stopping criteria was when the risk $< 2000$ and our initial weight vector consisted of all 0's except for the first element which was initialized to 1. The step sizes were 1e-2, 1e-4, and 1e-2 for methods (i), (ii), and (iii).
+    \begin{center}
+      \includegraphics[scale=0.5]{prob3_2}
+    \end{center}
+
+    Like in part (1), we see that methods (i) and (iii) reach the stopping criteria relatively at around 6000 and 4000 iterations, respectively. It takes more iterations for stochastic gradient descent to converge, which makes sense because only one sample is effectively examined at a time whereas in batch gradient descent all of the samples are considered each iteration. This is also why we observe more fluctuatuions than with the batch process (risk occaisonally increases).
+
+  \item We used an initial learning rate of 0.01 for each of the three preprocessing methods.
+    \begin{center}
+      \includegraphics[scale=0.5]{prob3_3}
+    \end{center}
+
+    Initially when the learning rate is still relatively large we see fluctuations in the risk just like we did in part (2). However as the number of iterations increases, the risk plot becomes smoother than the correponding plot for part (2) because the learning rate decreases inversely proportional to the number of iterations (so updates are smaller in magnitude). Because of the decreasing learning rate, the risks at 5000 iterations using this method are considerably higher than those for the constant learning rate.
+    
+  \item For the kernel implentations I decided to use preprocessing method (i) as opposed to (iii). Even though (iii) slightly outperforms (i) with respect to the training risk in part (2), (i) produced lower validation risks when I compared the two methods for this part. Maybe its because I was unable to tune the parameters to best suit (iii) and/or (iii) doesn't generalize as well as (i).
+    \begin{enumerate}[a)]
+    \item For the quadratic kernel, I used $\lambda=0.001$ and $\epsilon=1e-5$. The initial weights were all set to 0. Tuning the $\rho$ parameter via 6-fold cross validation, we found that the optimal value was $rho=1$:
+      \begin{center}      
+        $\begin{array}{c|c}
+          \rho & risk \\ \hline
+          0.0001 & 337.83 \\
+          0.01   & 338.38 \\
+          0.1    & 326.34 \\
+          1      & 318.12 \\
+          10     & 318.31 \\
+          100    & 348.03 \\
+          1000   & 681.77
+        \end{array}$
+      \end{center}
+        The two plots below plot the training (top) and validation risks (bottom) over the iterations. The training risk settled at 1415.67 and the validation risk settled at 698.56.
+        \begin{center}
+          \includegraphics[scale=0.5]{prob3_4a}          
+        \end{center}
+        
+      \item For the linear kernel, I used $\lambda=0.001$ and $\epsilon=0.01$. The initial weights were all set to 0. Tuning the $\rho$ parameter via 6-fold cross validation, we found that the optimal value was $rho=100$:
+        \begin{center}
+          $\begin{array}{c|c}
+            \rho & risk \\ \hline
+            0.0001 & 524.80 \\
+            0.01   & 523.60 \\
+            0.1    & 524.20 \\
+            1      & 514.88 \\
+            10     & 407.23 \\
+            100    & 335.81 \\
+            1000   & 715.65
+          \end{array}$
+        \end{center}
+
+        The two plots below plot the training (top) and validation risks (bottom) over the iterations. The training risk settled at 1229.46 and the validation risk settled at 664.97.
+        \begin{center}
+          \includegraphics[scale=0.5]{prob3_4b}          
+        \end{center}
+
+        We can usually tell if we are overfitting by examining both the training and validation results. The training risk should always trend downwards asymptotically. If the validation risk trends down but then starts trending upwards again, then that is a sign that we are overfitting the training data and thus not generalizing well to the validation data.
+        Even at 50000 iterations we see no obvious sings of overfitting for either the quadratic or linear kernel logistic regressions. Perhaps this is because our $\lambda$ is sufficiently large enough to prevent overfitting by penalizing large weights in $\vec{a}$.
+        We would have expected that if either of the methods would overfit, it would be the quadratic kernel because of its higher dimensionality. If that were the case we would want to increase $\lambda$ to prevent $\vec{a}$ from getting too large and overfitting. Conversely we would expect that the linear kernel would be more susceptible to underfitting so we would want to decrease $\lambda$.
+    \end{enumerate}
+    
+  \item I used the linear kernel logistic regression, where the data has been standardized with mean 0 and variance 1, for my Kaggle predictions. I used a custom featurizer, which is just the one given for previous homeworks with additional words added (e.g. viagra, re :, etc.). My Kaggle score was \textbf{0.85065}
+\end{enumerate}
+
+\section*{Problem 4}
+\begin{enumerate}[a)]
+  \item Below is my write up for this part\\
+    \includegraphics[scale=0.8]{prob4a}
+  \item Below is my write up for this part\\
+    \includegraphics[scale=0.8]{prob4b}
+  \item Below is my write up for this part\\
+    \includegraphics[scale=0.8]{prob4c}
+\end{enumerate}
+
+\section*{Problem 5}
+Daniel timestamps all messages based on the time since the previous midnight. He also notes that the number of spam messages tends to increase around midnight. If this is indeed the case, then the spam data points will be concentrated about the two ends of the timestamp feature space; the beginning and ending of the feature space represent the the times just after and before midnight, respectively. Of course such a data set is not linearly separable and so linear SVM cannot adequately classify based on this feature. If instead were were to lift the feature into a higher space, by using a quadratic kernel then we would be able to linearly separate the data based on this feature as seen below (red represents spam and blue represents ham):
+
+\begin{center}
+  \includegraphics[scale=0.5]{NonlinearSVM}\\
+  \textit{Source: http://nlp.stanford.edu/IR-book/html/htmledition/nonlinear-svms-1.html}
+\end{center}
+
+So to improve results when adding this feature and using a linear SVM, Daniel should use a quadratic kernel.
+
+
+\section*{Appendix: prob1.py}
+\lstinputlisting[language=python]{prob1.py}
+
+
+
+\section*{Appendix: prob2.py}
+\lstinputlisting[language=python]{prob2.py}
+
+
+
+\section*{Appendix: prob3 1.py}
+\lstinputlisting[language=python]{prob3_1.py}
+
+
+
+\section*{Appendix: prob3_2.py}
+\lstinputlisting[language=python]{prob3\_2.py}
+
+
+
+\section*{Appendix: prob3_3.py}
+\lstinputlisting[language=python]{prob3\_3.py}
+
+
+
+\section*{Appendix: prob3_4.py}
+\lstinputlisting[language=python]{prob3\_4.py}
+
+
+
+\section*{Appendix: prob3_5.py}
+\lstinputlisting[language=python]{prob3\_5.py}
+
+
+\section*{Appendix: featurizer.py}
+\lstinputlisting[language=python]{featurizer.py}
+
+\end{document}

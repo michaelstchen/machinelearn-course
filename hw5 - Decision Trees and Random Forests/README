@@ -1,0 +1,14 @@
+Language: Python2
+
+Instructions:
+I've named all of the submitted scripts with the part I use them
+for (e.g. spam_simple.py is for my lone decision tree on spam data,
+census_forest.py is for my forest for the census data). To run the
+scripts in a UNIX shell please make sure python is installed
+and call the scripts from the terminal as follows:
+
+    python -i census_forest.py
+
+The "-i" is used to stay in interactive mode to check values after the script completes (e.g. to check "err", which is the variable I use for my validation error rates).
+
+The scripts rely on calls to "DecisionTree.py", "featurize.py", and "featurize_census.py" as well as the train_data.csv, test_data.csv, \spam, \ham, and \test folders, so make sure to have these files in the same folder.

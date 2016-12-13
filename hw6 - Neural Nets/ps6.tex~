@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\graphicspath{ {Images/} }
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\title{CS 189: Homework 6}
+\author{Michael Stephen Chen\\ Kaggle Acct: michaelstchen \\SID: 23567341}
+
+\begin{document}
+\maketitle
+
+\pagebreak
+
+\section*{Problem 1}
+
+\section*{Problem 2}
+\begin{enumerate}[a.]
+  \item Mean-Squared Error
+    \begin{itemize}
+      \item All of the weights were initialized randomly, drawing from a normal distribution with a mean of 0 and a standard deviation of 0.01. A constant learning rate of 0.01 was used. Training was stopped after one epoch (50000 images drawn randomly with replacement).
+      \item The training accuracy was 0.89872. The validation accuracy was 0.8814.
+      \item The total training time was 839.56 seconds (14 minutes).
+      \item Below is a plot of the batch MSE loss over the training period calculated for every 1000 samples trained on
+        \begin{center}
+          \includegraphics[scale=0.5]{mse_loss}
+        \end{center}
+
+        Below is a plot of the training accuracy over the training period.
+        \begin{center}
+          \includegraphics[scale=0.5]{mse_acc}
+        \end{center}
+        
+    \end{itemize}
+
+  \item Cross-Entropy Error
+    \begin{itemize}
+      \item All of the weights were initialized randomly, drawing from a normal distribution with a mean of 0 and a standard deviation of 0.01. A constant learning rate of 0.01 was used. Training was stopped after one epoch (50000 images drawn randomly with replacement).
+      \item The training accuracy was 0.9536. The validation accuracy was 0.9412.
+      \item The total training time was 811.48 seconds (13.5 minutes).
+      \item Below is a plot of the batch cross-entropy loss over the training period calculated for every 1000 samples trained on
+        \begin{center}
+          \includegraphics[scale=0.5]{ce_loss}
+        \end{center}
+
+        Below is a plot of the training accuracy over the training period.
+        \begin{center}
+          \includegraphics[scale=0.5]{ce_acc}
+        \end{center}
+        
+    \end{itemize}
+
+\end{enumerate}
+
+
+\end{document}

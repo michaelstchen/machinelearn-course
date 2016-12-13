@@ -1,0 +1,13 @@
+Language: Python2
+Platform: Ubuntu
+
+Instructions:
+To run my neural nets on the digits data using the mse loss function make sure that neuralnets.py, digitsmse.py, and associated data are in the current directory and type the following into the terminal
+
+       python -i digitsmse.py
+
+Analogously, to run my neural net using the cross entropy loss type the following into the terminal
+
+	python -i digitsce.py
+
+Once the training is complete, the validation error will be printed.
