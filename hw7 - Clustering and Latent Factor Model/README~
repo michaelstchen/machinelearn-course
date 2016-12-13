@@ -1,9 +1,0 @@
-Language: Python2
-Platform: Ubuntu
-
-Instructions:
-All of my scripts are self-contained as long as the required import libraries are installed and the datasets are in the same directory. To run any of the scripts just open up the terminal and type the following
-
-       python -i digits_kmeans.py
-
-Replacing "digits_kmeans.py" with the appropriate file.
